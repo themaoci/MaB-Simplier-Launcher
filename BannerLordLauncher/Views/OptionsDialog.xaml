@@ -1,0 +1,149 @@
+﻿<Window x:Class="BannerLordLauncher.Views.OptionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BannerLordLauncher.Views"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:dd="urn:gong-wpf-dragdrop"
+        mc:Ignorable="d"
+        Title="Configuration" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" HorizontalAlignment="Center" VerticalAlignment="Center" Width="802" Height="508" BorderBrush="{DynamicResource PackIconMaterialBorderBrush2}" BorderThickness="2"
+        >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Dictionary.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Scrollbar.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/BannerLordLauncher;component/Assets/background.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,1024,1024"/>
+    </Window.Background>
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="24"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="19"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Text="Game configs folder (in Documents)" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="15,19,5,0" Grid.RowSpan="2" />
+        <TextBox Grid.Column="1" Text="{Binding Path=Config.ConfigPath}" IsReadOnly="True" Margin="5,0,0,18" Foreground="{DynamicResource ModListItemNative}" Background="{DynamicResource StackPanelBackground1}" BorderBrush="{DynamicResource PackIconMaterialBorderBrush1}" SelectionBrush="{DynamicResource Item.MouseOver.Background}" Grid.RowSpan="2" Grid.Row="1"/>
+        <Button Grid.Column="2" Grid.Row="1" Click="ButtonBase_OnClickConfig" Style="{StaticResource Button3}" Margin="0,0,5,0">
+            <iconPacks:PackIconMaterial Kind="FolderOpen" Width="12" Height="12"/>
+        </Button>
+
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="Game root folder (containing bin and modules)" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="15,0,5,0"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Path=Config.GamePath}" IsReadOnly="True" Margin="5,0,0,0" Foreground="{DynamicResource ModListItemNative}" Background="{DynamicResource StackPanelBackground1}" BorderBrush="{DynamicResource PackIconMaterialBorderBrush1}" SelectionBrush="{DynamicResource Item.MouseOver.Background}"/>
+        <Button Grid.Column="2" Grid.Row="3" Click="ButtonBase_OnClickGame" Style="{StaticResource Button3}" Margin="0,0,5,0">
+            <iconPacks:PackIconMaterial Kind="FolderOpen" Width="12" Height="12" RenderTransformOrigin="0.417,0.5" />
+        </Button>
+
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="Extra arguments when running game (like /diag)" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="15,0,5,0"/>
+        <TextBox Grid.Column="1" Grid.Row="5" Text="{Binding Path=Config.ExtraGameArguments}" Margin="5,0,0,0" Foreground="{DynamicResource ModListItemNative}" Background="{DynamicResource StackPanelBackground1}" BorderBrush="{DynamicResource PackIconMaterialBorderBrush1}" SelectionBrush="{DynamicResource Item.MouseOver.Background}"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="7" Text="Game exe to use" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="15,0,5,0"/>
+        <ComboBox Grid.Column="1" Grid.Row="7" Style="{StaticResource SimpleComboBox}" SelectedIndex="{Binding Path=Config.GameExeId}" Margin="5,0,0,0" Foreground="{DynamicResource ModListItemNative}" Background="{DynamicResource StackPanelBackground1}" BorderBrush="{DynamicResource PackIconMaterialBorderBrush1}">
+            <ComboBoxItem Style="{StaticResource SimpleComboBoxItem}">BannerLord.exe</ComboBoxItem>
+            <ComboBoxItem Style="{StaticResource SimpleComboBoxItem}">BannerLord.Native.exe</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock Grid.Column="0" Grid.Row="9" Text="Check for updates at startup" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="15,1,5,19" Grid.RowSpan="2"/>
+        <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Path=Config.CheckForUpdates}" Style="{StaticResource OptionsCheckBox}" Width="19" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="11" Text="Automatically submit crash logs*" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="15,0,5,0"/>
+        <CheckBox Grid.Column="1" Grid.Row="11" IsChecked="{Binding Path=Config.SubmitCrashLogs}" Style="{StaticResource OptionsCheckBox}" Width="19" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="13" Text="Close launcher after launching the game" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="15,0,5,0"/>
+        <CheckBox Grid.Column="1" Grid.Row="13" IsChecked="{Binding Path=Config.CloseWhenRunningGame}" Style="{StaticResource OptionsCheckBox}" Width="19" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="15" Text="Warn if trying to Run or Save with conflicts" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="15,0,5,0"/>
+        <CheckBox Grid.Column="1" Grid.Row="15" IsChecked="{Binding Path=Config.WarnOnConflict}" Style="{StaticResource OptionsCheckBox}" Width="19" Height="18.7" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        <ListBox Grid.Column="0" Grid.Row="16" ItemContainerStyle="{StaticResource ModListContainerEntry}" ItemsSource="{Binding Sorting}"
+                 SelectionMode="Single" Background="{StaticResource StackPanelBackground1}"
+                 BorderBrush="{DynamicResource PackIconMaterialBorderBrush1}" 
+                 BorderThickness="2,2,2,2" 
+                 ItemTemplate="{StaticResource OptionListEntry }"
+                 HorizontalContentAlignment="Stretch" 
+                 dd:DragDrop.IsDragSource="True" 
+                 dd:DragDrop.IsDropTarget="True" 
+                 dd:DragDrop.DropTargetAdornerBrush="Coral"
+                 dd:DragDrop.UseDefaultEffectDataTemplate="True"
+                 ToolTip="Available fields to sort with" Margin="0,15,0,5" Grid.RowSpan="2"
+        >
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                    <Setter Property="OverridesDefaultStyle" Value="true" />
+                    <Setter Property="Background" Value="#ff4e3827"/>
+                    <Style.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="Width" Value="18" />
+                            <Setter Property="Height" Value="Auto" />
+                            <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Resources>
+        </ListBox>
+
+        <ListBox Grid.Column="1" Grid.Row="16" ItemContainerStyle="{StaticResource ModListContainerEntry}" ItemsSource="{Binding Sorting2}"
+            SelectionMode="Single" Background="{StaticResource StackPanelBackground1}"
+            BorderBrush="{DynamicResource PackIconMaterialBorderBrush1}" 
+            BorderThickness="2,2,2,2" 
+            ItemTemplate="{StaticResource OptionListEntry }"
+            dd:DragDrop.IsDragSource="True" 
+            dd:DragDrop.IsDropTarget="True" 
+            HorizontalContentAlignment="Stretch" 
+            dd:DragDrop.DropTargetAdornerBrush="Coral"
+            dd:DragDrop.UseDefaultEffectDataTemplate="True"
+            ToolTip="Fields that will be used when sorting, followed by dependency sorting" Margin="0,15,0,5" Grid.RowSpan="2"
+        >
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                    <Setter Property="OverridesDefaultStyle" Value="true" />
+                    <Setter Property="Background" Value="#ff4e3827"/>
+                    <Style.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="Width" Value="18" />
+                            <Setter Property="Height" Value="Auto" />
+                            <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Resources>
+        </ListBox>
+
+        <TextBlock Grid.Column="0" Grid.Row="18" Text="* Need to restart the application for the change to take effect" Foreground="{DynamicResource PackIconMaterialForeground1}" FontSize="14" Margin="10,0,386,0" Grid.ColumnSpan="2"/>
+        <StackPanel Grid.Column="1" Grid.Row="19" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Ok" FontSize="22" Style="{StaticResource Button2}" Click="ButtonBase_OnClickOk">
+            </Button>
+            <Button Content="Cancel" FontSize="22" Style="{StaticResource Button2}" Click="ButtonBase_OnClickCancel" Margin="0,0,15,0">
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
